@@ -19,6 +19,16 @@ Start the app. Look at the camera. Let the music play.
 
 ---
 
+## 📸 Demo
+
+Here is Mood DJ in action. It detects the user is "Happy" and queues upbeat Pop music instantly.
+![Mood DJ Demo Screenshot](demo2.png)
+
+![Mood DJ Demo Screenshot](demo1.png)
+
+
+
+
 ## 🔮 The Vibe Flow
 
 This isn't just a shuffle button. It's an intelligent loop that connects your biology to Spotify's library.
