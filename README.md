@@ -1,34 +1,51 @@
+<div align="center">
+
 # 🎧 Mood DJ
-> **Your face is the playlist.**
+### The AI That Spins Tracks Based on Your Tracks.
 
-[![Python](https://img.shields.io/badge/Made%20with-Python-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
-[![Spotify](https://img.shields.io/badge/Spotify-API-1DB954?style=flat-square&logo=spotify&logoColor=white)](https://developer.spotify.com/)
-[![AI](https://img.shields.io/badge/AI-Powered-FF6F00?style=flat-square&logo=openai&logoColor=white)]()
+[![Python](https://img.shields.io/badge/Made%20with-Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Spotify](https://img.shields.io/badge/Spotify-API-1DB954?style=for-the-badge&logo=spotify&logoColor=white)](https://developer.spotify.com/)
+[![AI](https://img.shields.io/badge/AI-Powered-FF6F00?style=for-the-badge&logo=openai&logoColor=white)]()
 
-Mood DJ lets your webcam see how you feel and uses AI to automatically curate and stream a Spotify playlist that perfectly matches your current vibe.
+<br>
 
-If you smile, the music gets upbeat. If you frown, it gets mellow. No clicks needed.
+Start the app. Look at the camera. Let the music play.
+
+📺 ➜ 🧠 ➜ 🎵
+<br>
+<b>Detect. Analyze. Vibe.</b>
+
+</div>
 
 ---
 
-## 🧠 How It Works (The Vibe Flow)
+## 🔮 The Vibe Flow
 
-This diagram shows how Mood DJ processes your video feed and turns it into music.
+This isn't just a shuffle button. It's an intelligent loop that connects your biology to Spotify's library.
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#1DB954', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f0f0f0'}}}%%
-graph TD
-    A[📹 Webcam Input] -->|OpenCV Captures Frame| B(👁️ Face Detection);
-    B -->|FER Library Analyzes| C{🧠 AI Emotion Engine};
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#191414', 'primaryTextColor': '#1DB954', 'primaryBorderColor': '#1DB954', 'lineColor': '#1DB954', 'secondaryColor': '#191414', 'tertiaryColor': '#282828'}}}%%
+graph LR
+    subgraph INPUT
+    A[📹 Webcam Feed] -->|Captures| B(👁️ OpenCV Vision);
+    end
     
-    C -- "Happy 😊" --> D[🎹 Genre: Pop/Upbeat];
-    C -- "Sad 😢" --> E[🎻 Genre: Acoustic/Lo-Fi];
-    C -- "Angry 😠" --> F[🎸 Genre: Rock/Metal];
-    C -- "Neutral 😐" --> G[🎷 Genre: Jazz/Chill];
+    B -->|Extracts Face Data| C{🧠 The BRAIN Engine};
+    
+    subgraph DECISION CORE
+    C -- "Happy 😊" --> D[🎹 Upbeat / Pop];
+    C -- "Sad 😢" --> E[🎻 Acoustic / Lo-Fi];
+    C -- "Angry 😠" --> F[🎸 Rock / Metal];
+    C -- "Neutral 😐" --> G[🎷 Chill / Jazz];
+    end
 
-    D --> H[🟢 Spotify Connect];
+    D --> H[⚡ Spotipy Connect];
     E --> H;
     F --> H;
     G --> H;
     
-    H -->|API Call| I[🔊 Play Track on Device];
+    subgraph OUTPUT
+    H -->|API Command| I((🔊 LIVE PLAYBACK));
+    end
+
+    style I fill:#1DB954,stroke:#FFFFFF,stroke-width:2px,color:white
