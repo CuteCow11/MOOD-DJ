@@ -1,7 +1,7 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import random
-import brain  # <--- MUST BE IMPORTED
+import brain  
 
 def setup_spotify():
     SPOTIPY_CLIENT_ID = "YOUR SPOTIPY_CLIENT_ID"         
@@ -33,7 +33,7 @@ def detect_emotion(detector, frame):
     return None, None
 
 def get_spotify_recommendations(sp, emotion):
-    # 1. ASK BRAIN
+
     try:
         preferred_region = brain.get_best_region()
     except Exception as e:
@@ -42,7 +42,6 @@ def get_spotify_recommendations(sp, emotion):
 
     print(f"   [AI] Targeting Region: {preferred_region.upper()}")
 
-    # 2. BUILD QUERY
     search_query = ""
     if emotion == 'happy':
         search_query = random.choice([f"happy {preferred_region} pop", f"upbeat {preferred_region}"])
@@ -59,7 +58,7 @@ def get_spotify_recommendations(sp, emotion):
     elif emotion == 'disgust':
         search_query = "heavy metal"
 
-    # 3. SEARCH
+
     try:
         print(f"   -> Searching: '{search_query}'...")
         random_offset = random.randint(0, 50)
@@ -67,7 +66,7 @@ def get_spotify_recommendations(sp, emotion):
         results = sp.search(q=search_query, limit=20, offset=random_offset, type='track')
         raw_items = results['tracks']['items']
         
-        # 4. FILTER BANNED SONGS
+
         valid_items = []
         for item in raw_items:
             if not brain.is_song_banned(item['id']):
@@ -79,7 +78,7 @@ def get_spotify_recommendations(sp, emotion):
             random.shuffle(valid_items)
             return valid_items, preferred_region
         else:
-            # Fallback
+
             fallback = sp.search(q=f"top {preferred_region}", limit=10)
             return fallback['tracks']['items'], preferred_region
 
