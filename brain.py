@@ -4,7 +4,7 @@ import random
 
 DATA_FILE = "brain_data.json"
 
-# Initial weights
+
 DEFAULT_DATA = {
     "banned_song_ids": [],
     "region_scores": {
@@ -24,7 +24,7 @@ def load_brain():
     try:
         with open(DATA_FILE, 'r') as f:
             data = json.load(f)
-            # Fix: Ensure all keys exist if loading an old file
+
             for key in DEFAULT_DATA:
                 if key not in data:
                     data[key] = DEFAULT_DATA[key]
@@ -42,7 +42,7 @@ def save_brain(data):
 def get_best_region():
     """Returns the user's favorite region."""
     data = load_brain()
-    # Return the preferred region directly
+
     return data.get("current_region", "english")
 
 def is_song_banned(song_id):
@@ -57,13 +57,13 @@ def train_model(song_id, time_listened, region_tag="hindi"):
     data = load_brain()
     data["total_songs_played"] += 1
     
-    # Ensure region key exists
+
     if region_tag not in data["region_scores"]:
         data["region_scores"][region_tag] = 10
 
     print(f"\n[BRAIN] Analyzing feedback for '{region_tag.upper()}'...")
 
-    # 1. SCORING LOGIC
+
     if time_listened < 15:
         print(f"   -> Skipped instantly ({time_listened:.1f}s). BANNING song.")
         if song_id not in data["banned_song_ids"]:
@@ -78,19 +78,15 @@ def train_model(song_id, time_listened, region_tag="hindi"):
         print(f"   -> Liked ({time_listened:.1f}s). Boosting score!")
         data["region_scores"][region_tag] += 2
 
-    # 2. FLOOR LIMIT (No negatives)
+
     if data["region_scores"][region_tag] < 0:
         data["region_scores"][region_tag] = 0
-
-    # 3. MERCY RULE (Reset if all are 0)
     all_scores = list(data["region_scores"].values())
     if all(score == 0 for score in all_scores):
         print("   [BRAIN] Scores too low. Resetting all to 10.")
         for key in data["region_scores"]:
             data["region_scores"][key] = 10
 
-    # 4. PICK WINNER
-    # If there's a tie, pick a random one so we don't get stuck
     max_score = max(data["region_scores"].values())
     candidates = [r for r, s in data["region_scores"].items() if s == max_score]
     best_region = random.choice(candidates)
