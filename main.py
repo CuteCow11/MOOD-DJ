@@ -12,7 +12,7 @@ except ImportError:
 def run_app():
     print("--- MOOD DJ IS READY ---")
     
-    # SETUP
+ 
     try:
         sp_client = music.setup_spotify()
         user = sp_client.current_user()
@@ -35,7 +35,7 @@ def run_app():
         if not ret: break
         frame = cv2.flip(frame, 1)
 
-        # Detect
+
         try:
             emotion, score = music.detect_emotion(detector, frame) if hasattr(music, 'detect_emotion') else detector.top_emotion(frame)
         except:
@@ -51,16 +51,15 @@ def run_app():
         cv2.putText(frame, text, (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2)
         cv2.imshow('Mood DJ', frame)
 
-        # PLAY LOGIC
         if emotion:
             print(f"\n[LOCKED] User is {emotion}.")
             
-            # Freeze Screen
+ 
             cv2.putText(frame, "FETCHING SONG...", (20, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
             cv2.imshow('Mood DJ', frame)
             cv2.waitKey(1) 
 
-            # Get Song
+
             tracks, region_tag = music.get_spotify_recommendations(sp_client, emotion)
             
             if tracks:
@@ -71,7 +70,7 @@ def run_app():
                 
                 start_time = time.time()
                 
-                # Update UI
+
                 cv2.putText(frame, f"Playing: {track['name']}", (20, 150), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
                 cv2.putText(frame, f"Region: {region_tag}", (20, 180), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (200, 200, 200), 1)
                 cv2.putText(frame, "Press 's' to SKIP", (20, 220), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)
@@ -79,15 +78,14 @@ def run_app():
 
                 print("--> LISTENING... (Press 's' to Skip)")
                 
-                # Wait Loop
+
                 while True:
                     key = cv2.waitKey(0) & 0xFF
                     
                     if key == ord('s'):
                         end_time = time.time()
                         duration = end_time - start_time
-                        
-                        # TRAIN AI
+
                         music.brain.train_model(track['id'], duration, region_tag)
                         
                         print("Rescanning...")
