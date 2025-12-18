@@ -11,3 +11,4 @@ brain_data.json
 # System files
 __pycache__/
 *.pyc
+.cache
