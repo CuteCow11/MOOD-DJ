@@ -1,0 +1,13 @@
+# Secrets
+token.txt
+.env
+.cache
+.spotipy_cache
+
+# User Data
+mood_dj.db
+brain_data.json
+
+# System files
+__pycache__/
+*.pyc
